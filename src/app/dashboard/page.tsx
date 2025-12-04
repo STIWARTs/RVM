@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Recycle, Coins, TrendingUp, Award } from "lucide-react"
+import { Recycle, Coins, TrendingUp, Award, ArrowUpRight, Leaf, Zap, Droplets } from "lucide-react"
 import { motion } from "framer-motion"
+import { AnimatedCard } from "@/components/ui/animated-card"
+import { AnimatedCounter } from "@/components/ui/animated-counter"
 
 export default function DashboardPage() {
   const [stats, setStats] = useState({
@@ -15,12 +17,15 @@ export default function DashboardPage() {
 
   useEffect(() => {
     // Fetch user stats - dummy data for now
-    setStats({
-      tokens: 450,
-      totalBottles: 45,
-      carbonSaved: 2.25,
-      rank: 12,
-    })
+    // Simulate loading
+    setTimeout(() => {
+      setStats({
+        tokens: 450,
+        totalBottles: 45,
+        carbonSaved: 2.25,
+        rank: 12,
+      })
+    }, 500)
   }, [])
 
   const containerVariants = {
@@ -37,163 +42,213 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="p-4 md:p-8">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-        >
+    <div className="p-4 md:p-8 space-y-8">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+        className="max-w-7xl mx-auto"
+      >
+        <div className="flex justify-between items-center mb-8">
           <motion.h1
             variants={itemVariants}
-            className="text-3xl md:text-4xl font-bold text-gray-900 mb-8"
+            className="text-3xl md:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent"
           >
-            Welcome Back! 🌱
+            Dashboard Overview
           </motion.h1>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <motion.div variants={itemVariants}>
-              <StatsCard
-                title="Total Tokens"
-                value={stats.tokens}
-                icon={<Coins className="w-8 h-8 text-emerald-600" />}
-                gradient="from-emerald-500 to-teal-500"
-              />
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <StatsCard
-                title="Bottles Recycled"
-                value={stats.totalBottles}
-                icon={<Recycle className="w-8 h-8 text-blue-600" />}
-                gradient="from-blue-500 to-cyan-500"
-              />
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <StatsCard
-                title="CO₂ Saved (kg)"
-                value={stats.carbonSaved.toFixed(2)}
-                icon={<TrendingUp className="w-8 h-8 text-green-600" />}
-                gradient="from-green-500 to-emerald-500"
-              />
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <StatsCard
-                title="Your Rank"
-                value={`#${stats.rank}`}
-                icon={<Award className="w-8 h-8 text-yellow-600" />}
-                gradient="from-yellow-500 to-orange-500"
-              />
-            </motion.div>
-          </div>
-
-          <motion.div variants={itemVariants} className="grid md:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Recent Activity</CardTitle>
-                <CardDescription>Your latest recycling transactions</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <ActivityItem
-                    title="Plastic Bottle"
-                    tokens={10}
-                    time="2 hours ago"
-                    location="RVM Station - Mall Road"
-                  />
-                  <ActivityItem
-                    title="Aluminum Can"
-                    tokens={15}
-                    time="1 day ago"
-                    location="RVM Station - Park Street"
-                  />
-                  <ActivityItem
-                    title="Plastic Bottle"
-                    tokens={10}
-                    time="2 days ago"
-                    location="RVM Station - Mall Road"
-                  />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Environmental Impact</CardTitle>
-                <CardDescription>Your contribution to the planet</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <ImpactItem
-                    icon="🌳"
-                    title="Trees Saved"
-                    value="0.5"
-                    description="Equivalent trees protected"
-                  />
-                  <ImpactItem
-                    icon="💧"
-                    title="Water Saved"
-                    value="450L"
-                    description="Liters of water conserved"
-                  />
-                  <ImpactItem
-                    icon="⚡"
-                    title="Energy Saved"
-                    value="1.2 kWh"
-                    description="Energy conserved from recycling"
-                  />
-                </div>
-              </CardContent>
-            </Card>
+          <motion.div variants={itemVariants} className="text-sm text-gray-500 bg-white/50 px-4 py-2 rounded-full backdrop-blur-sm border border-white/20">
+            Last updated: Just now
           </motion.div>
-        </motion.div>
-      </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <AnimatedCard delay={0.1} className="bg-gradient-to-br from-emerald-500 to-teal-600 text-white border-none shadow-lg shadow-emerald-500/20">
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                  <Coins className="w-6 h-6 text-white" />
+                </div>
+                <span className="text-xs font-medium bg-white/20 px-2 py-1 rounded text-white/90 flex items-center gap-1">
+                  +12% <ArrowUpRight className="w-3 h-3" />
+                </span>
+              </div>
+              <div className="space-y-1">
+                <p className="text-emerald-100 text-sm font-medium">Total Tokens</p>
+                <h3 className="text-3xl font-bold">
+                  <AnimatedCounter value={stats.tokens} />
+                </h3>
+              </div>
+            </div>
+          </AnimatedCard>
+
+          <AnimatedCard delay={0.2} className="bg-white border-emerald-100 shadow-sm hover:shadow-md hover:border-emerald-200">
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Recycle className="w-6 h-6 text-blue-600" />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <p className="text-gray-500 text-sm font-medium">Bottles Recycled</p>
+                <h3 className="text-3xl font-bold text-gray-900">
+                  <AnimatedCounter value={stats.totalBottles} />
+                </h3>
+              </div>
+            </div>
+          </AnimatedCard>
+
+          <AnimatedCard delay={0.3} className="bg-white border-emerald-100 shadow-sm hover:shadow-md hover:border-emerald-200">
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <TrendingUp className="w-6 h-6 text-green-600" />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <p className="text-gray-500 text-sm font-medium">CO₂ Saved (kg)</p>
+                <h3 className="text-3xl font-bold text-gray-900">
+                  <AnimatedCounter value={stats.carbonSaved} />
+                </h3>
+              </div>
+            </div>
+          </AnimatedCard>
+
+          <AnimatedCard delay={0.4} className="bg-gradient-to-br from-orange-400 to-pink-500 text-white border-none shadow-lg shadow-orange-500/20">
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                  <Award className="w-6 h-6 text-white" />
+                </div>
+                <span className="text-xs font-medium bg-white/20 px-2 py-1 rounded text-white/90">
+                  Top 5%
+                </span>
+              </div>
+              <div className="space-y-1">
+                <p className="text-orange-100 text-sm font-medium">Global Rank</p>
+                <h3 className="text-3xl font-bold">
+                  #<AnimatedCounter value={stats.rank} />
+                </h3>
+              </div>
+            </div>
+          </AnimatedCard>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <AnimatedCard delay={0.5} className="glass border-0">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Recycle className="w-5 h-5 text-emerald-600" />
+                Recent Activity
+              </CardTitle>
+              <CardDescription>Your latest recycling transactions</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <ActivityItem
+                  title="Plastic Bottle"
+                  tokens={10}
+                  time="2 hours ago"
+                  location="RVM Station - Mall Road"
+                  icon={<Recycle className="w-4 h-4 text-blue-500" />}
+                  bg="bg-blue-100"
+                />
+                <ActivityItem
+                  title="Aluminum Can"
+                  tokens={15}
+                  time="1 day ago"
+                  location="RVM Station - Park Street"
+                  icon={<Recycle className="w-4 h-4 text-gray-500" />}
+                  bg="bg-gray-100"
+                />
+                <ActivityItem
+                  title="Plastic Bottle"
+                  tokens={10}
+                  time="2 days ago"
+                  location="RVM Station - Mall Road"
+                  icon={<Recycle className="w-4 h-4 text-blue-500" />}
+                  bg="bg-blue-100"
+                />
+              </div>
+            </CardContent>
+          </AnimatedCard>
+
+          <AnimatedCard delay={0.6} className="glass border-0">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Leaf className="w-5 h-5 text-emerald-600" />
+                Environmental Impact
+              </CardTitle>
+              <CardDescription>Your contribution to the planet</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <ImpactItem
+                  icon={<Leaf className="w-5 h-5 text-green-600" />}
+                  bg="bg-green-100"
+                  title="Trees Saved"
+                  value="0.5"
+                  description="Equivalent trees protected"
+                />
+                <ImpactItem
+                  icon={<Droplets className="w-5 h-5 text-blue-600" />}
+                  bg="bg-blue-100"
+                  title="Water Saved"
+                  value="450L"
+                  description="Liters of water conserved"
+                />
+                <ImpactItem
+                  icon={<Zap className="w-5 h-5 text-yellow-600" />}
+                  bg="bg-yellow-100"
+                  title="Energy Saved"
+                  value="1.2 kWh"
+                  description="Energy conserved from recycling"
+                />
+              </div>
+            </CardContent>
+          </AnimatedCard>
+        </div>
+      </motion.div>
     </div>
   )
 }
 
-function StatsCard({ title, value, icon, gradient }: any) {
+function ActivityItem({ title, tokens, time, location, icon, bg }: any) {
   return (
-    <Card className="overflow-hidden">
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm text-gray-600 mb-1">{title}</p>
-            <p className="text-3xl font-bold text-gray-900">{value}</p>
-          </div>
-          <div className={`bg-gradient-to-br ${gradient} p-3 rounded-lg`}>
-            {icon}
-          </div>
+    <motion.div 
+      whileHover={{ x: 5, backgroundColor: "rgba(255,255,255,0.5)" }}
+      className="flex items-center justify-between p-3 rounded-xl transition-colors"
+    >
+      <div className="flex items-center gap-3">
+        <div className={`p-2 rounded-lg ${bg}`}>
+          {icon}
         </div>
-      </CardContent>
-    </Card>
-  )
-}
-
-function ActivityItem({ title, tokens, time, location }: any) {
-  return (
-    <div className="flex items-center justify-between py-2 border-b last:border-0">
-      <div>
-        <p className="font-medium text-gray-900">{title}</p>
-        <p className="text-sm text-gray-500">{location}</p>
+        <div>
+          <p className="font-medium text-gray-900">{title}</p>
+          <p className="text-xs text-gray-500">{location}</p>
+        </div>
+      </div>
+      <div className="text-right">
+        <div className="text-emerald-600 font-bold">+{tokens}</div>
         <p className="text-xs text-gray-400">{time}</p>
       </div>
-      <div className="text-emerald-600 font-semibold">+{tokens} tokens</div>
-    </div>
+    </motion.div>
   )
 }
 
-function ImpactItem({ icon, title, value, description }: any) {
+function ImpactItem({ icon, title, value, description, bg }: any) {
   return (
-    <div className="flex items-start space-x-3 py-2 border-b last:border-0">
-      <div className="text-2xl">{icon}</div>
-      <div className="flex-1">
-        <p className="font-medium text-gray-900">{title}</p>
-        <p className="text-2xl font-bold text-emerald-600">{value}</p>
-        <p className="text-xs text-gray-500">{description}</p>
+    <motion.div 
+      whileHover={{ scale: 1.02 }}
+      className="flex items-center space-x-4 p-4 rounded-xl bg-white/40 border border-white/40 shadow-sm"
+    >
+      <div className={`p-3 rounded-full ${bg}`}>
+        {icon}
       </div>
-    </div>
+      <div className="flex-1">
+        <p className="text-sm font-medium text-gray-500">{title}</p>
+        <p className="text-xl font-bold text-gray-900">{value}</p>
+        <p className="text-xs text-emerald-600">{description}</p>
+      </div>
+    </motion.div>
   )
 }

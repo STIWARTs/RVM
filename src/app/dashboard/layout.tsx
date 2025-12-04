@@ -7,6 +7,8 @@ import { Home, QrCode, Wallet, Trophy, Gift, User, LogOut, Settings, Users, BarC
 import { Button } from "@/components/ui/button"
 import { signOut, useSession } from "next-auth/react"
 
+import { PageTransition } from "@/components/ui/page-transition"
+
 export default function DashboardLayout({
   children,
 }: {
@@ -47,7 +49,7 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 leaf-pattern">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 leaf-pattern overflow-hidden">
       {/* Mobile Bottom Navigation */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
         <div className="grid grid-cols-6 gap-1">
@@ -116,7 +118,9 @@ export default function DashboardLayout({
       {/* Main content */}
       <div className="md:pl-64 flex flex-col flex-1">
         <main className="flex-1 pb-20 md:pb-0">
-          {children}
+          <PageTransition>
+            {children}
+          </PageTransition>
         </main>
       </div>
     </div>
